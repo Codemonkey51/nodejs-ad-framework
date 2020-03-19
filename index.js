@@ -26,8 +26,8 @@ function randomLoop(weight,num){
   }
 }
 
-http.createServer(function(request, response) {
-  const queryObject = url.parse(request.url,true).query;
+function getFullUrl(){
+    const queryObject = url.parse(request.url,true).query;
     //console.log(queryObject);
     var params = request.url.substring(1);
     var hostname = request.headers.host; // hostname = 'localhost:8080'
@@ -36,7 +36,17 @@ http.createServer(function(request, response) {
     console.log(params)
     var full_url = 'http://' + hostname + pathname + params;
     const page_url = new URL(full_url);
-    var url_params = page_url.searchParams;
+    return page_url
+}
+
+function getUrlParams(url){
+    var url_params = url.searchParams;
+    return url_params
+}
+
+http.createServer(function(request, response) {
+    var full_url = getFullUrl();
+    var url_params = getUrlParams(full_url);
     if(url_params.has('ad') && ads.includes(url_params.get('ad'))){
     var filePath = path.join('ad/', url_params.get('ad'))
     }else{
