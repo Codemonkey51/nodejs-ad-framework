@@ -1,4 +1,3 @@
-//console.clear();
 var http = require('http'),
     fileSystem = require('fs'),
     url = require('url'),
